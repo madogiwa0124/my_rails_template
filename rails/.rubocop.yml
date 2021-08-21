@@ -1,0 +1,25 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/**/*
+    - vendor/**/*
+    - config/**/*
+    - bin/**/*
+    - tmp/**/*
+    - node_modules/**/*
+    - Rakefile
+    - Gemfile
+    - Gemfile.lock
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
