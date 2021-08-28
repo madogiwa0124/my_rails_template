@@ -5,6 +5,7 @@ def source_paths
 end
 
 gem 'okcomputer'
+gem 'lograge'
 gem 'redis'
 gem 'sidekiq'
 gem 'simpacker'
@@ -22,14 +23,42 @@ gem_group :development, :test do
   gem 'rubocop-rspec', require: false
 end
 
-initializer 'ok_computer.rb', <<~CODE
+initializer 'okcomputer.rb', <<~CODE
   OkComputer::Registry.register 'ruby version', OkComputer::RubyVersionCheck.new
   # OkComputer::Registry.register 'version', OkComputer::AppVersionCheck.new(env: 'SOURCE_VERSION')
+  # OkComputer::Registry.register 'redis', OkComputer::RedisCheck.new({})
+  # OkComputer::Registry.register 'ruby version', OkComputer::RubyVersionCheck.new
+  # OkComputer::Registry.register 'cache', OkComputer::GenericCacheCheck.new
+  # OkComputer::Registry.register 'sidekiq latency', OkComputer::SidekiqLatencyCheck.new('default')
 CODE
 
 initializer 'lograge.rb', <<~CODE
   Rails.application.configure do
     config.lograge.enabled = true
+    # NOTE: ignored `/healthcheck `
+    config.lograge.ignore_actions = ['OkComputer::OkComputerController#show']
+    config.lograge.custom_payload do |controller|
+      {
+        host: controller.request.host,
+        request_id: controller.request.request_id,
+        remote_ip: controller.request.remote_ip,
+        user_agent: controller.request.user_agent,
+        user_id: controller.current_user&.id
+      }
+    end
+    config.lograge.custom_options = lambda do |event|
+      {
+        host: event.payload[:host],
+        request_id: event.payload[:request_id],
+        remote_ip: event.payload[:remote_ip],
+        user_agent: event.payload[:user_agent],
+        user_id: event.payload[:user_id],
+        time: Time.current.iso8601
+      }
+    end
+  end
+CODE
+
 initializer 'sidekiq.rb', <<~CODE
   Sidekiq.configure_server do |config|
     config.redis = { url: ENV['REDIS_URL'] }

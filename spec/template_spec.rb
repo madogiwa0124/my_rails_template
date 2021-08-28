@@ -11,6 +11,7 @@ RSpec.describe 'MyRailsTemplate' do
 
       # check generated files
       expect(File.exist?(app_path)).to eq true
+      expect(File.exist?(file_path.call('config/initializers/okcomputer.rb'))).to eq true
       expect(File.exist?(file_path.call('config/initializers/sidekiq.rb'))).to eq true
       expect(File.exist?(file_path.call('config/initializers/lograge.rb'))).to eq true
       expect(File.exist?(file_path.call('config/settings.yml'))).to eq true
