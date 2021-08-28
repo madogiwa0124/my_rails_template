@@ -10,7 +10,7 @@ $ cd my_rails_template
 $ bundle install
 $ XDG_CONFIG_HOME=./ bundle exec rails new sample_app -m ./rails/template.rb
 
-Using --skip-bundle --skip-action-mailbox --skip-action-text --skip-active-storage --skip-action-cable --skip-test-unit --skip-jbuilder --skip-spring --skip-turbolinks --skip-sprockets --skip-javascript --database=postgresql from my_rails_template/rails/railsrc
+Using --skip-bundle --skip-action-mailbox --skip-action-text --skip-active-storage --skip-action-cable --skip-test --skip-test-unit --skip-jbuilder --skip-spring --skip-turbolinks --skip-sprockets --skip-javascript --database=postgresql --force from my_rails_template/rails/railsrc
       create  
       create  README.md
       create  Rakefile
@@ -102,23 +102,6 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
       create  tmp/cache/assets
       create  vendor
       create  vendor/.keep
-      create  test/fixtures/files
-      create  test/fixtures/files/.keep
-      create  test/controllers
-      create  test/controllers/.keep
-      create  test/mailers
-      create  test/mailers/.keep
-      create  test/models
-      create  test/models/.keep
-      create  test/helpers
-      create  test/helpers/.keep
-      create  test/integration
-      create  test/integration/.keep
-      create  test/channels/application_cable/connection_test.rb
-      create  test/test_helper.rb
-      create  test/system
-      create  test/system/.keep
-      create  test/application_system_test_case.rb
       remove  app/javascript
       remove  config/initializers/assets.rb
       remove  app/javascript/channels
@@ -129,10 +112,15 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
        apply  my_rails_template/rails/template.rb
      gemfile    okcomputer
      gemfile    lograge
+     gemfile    redis
+     gemfile    sidekiq
      gemfile    simpacker
+     gemfile    rails-i18n (~> 6.0.0)
      gemfile    group :development, :test
         gsub    Gemfile
+     gemfile    bullet
      gemfile    brakeman
+     gemfile    erb_lint
      gemfile    rspec-rails
      gemfile    factory_bot_rails
      gemfile    rubocop
@@ -140,11 +128,18 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
      gemfile    rubocop-rails
      gemfile    rubocop-rspec
         gsub    Gemfile
- initializer    ok_computer.rb
+ initializer    okcomputer.rb
  initializer    lograge.rb
+ initializer    sidekiq.rb
+       route    # For Sidekiq Web UI
+require 'sidekiq/web'
+mount Sidekiq::Web, at: '/sidekiq'
       create    .rubocop.yml
+      create    .erb-lint.yml
       create    .editorconfig
+      create    config/sidekiq.yml
       create    config/simpacker.yml
       create    config/settings.yml
+       force    config/database.yml
          run    cp .gitignore .dockerignore from "."
 ```
