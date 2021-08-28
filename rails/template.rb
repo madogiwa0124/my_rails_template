@@ -69,7 +69,7 @@ initializer 'sidekiq.rb', <<~CODE
   end
 CODE
 
-environment <<~TEXT
+environment <<~'CODE'
   # For TZ
   config.time_zone = 'Tokyo'
   # config.active_record.default_timezone = :local
@@ -98,11 +98,20 @@ environment <<~TEXT
     end
   end
 
+  # For default error tag
+  config.action_view.field_error_proc = proc do |html_tag, instance|
+    if instance.is_a?(ActionView::Helpers::Tags::Label)
+      html_tag
+    else
+      %(<div class="field_with_errors">#{html_tag}</div>).html_safe # rubocop:disable Rails/OutputSafety
+    end
+  end
+
   # For ActiveJob and ActionMailer
   config.active_job.queue_adapter = :sidekiq
   config.active_job.default_queue_name = :default
   config.action_mailer.deliver_later_queue_name = :default
-TEXT
+CODE
 
 development_setting = <<~CODE
   # For docker environment
