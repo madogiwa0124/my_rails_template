@@ -11,3 +11,4 @@
 --skip-sprockets
 --skip-javascript
 --database=postgresql
+--force

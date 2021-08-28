@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'erb'
 
 def source_paths
   [__dir__]
@@ -78,6 +79,12 @@ environment <<~'CODE'
   config.i18n.available_locales = [:ja, :en]
   config.i18n.default_locale = :ja
   config.i18n.fallbacks = :en
+
+  # For MultiDB
+  config.active_record.database_selector = { delay: 2.seconds }
+  config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
+  config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
   # For custom settings
   config.settings = config_for(:settings)
 
@@ -144,11 +151,19 @@ route <<~CODE
   mount Sidekiq::Web, at: '/sidekiq'
 CODE
 
+db_config_template_path = (source_paths + ["config/database.yml.erb"]).join("/")
+db_config_output_path   = (source_paths + ["config/tmp/database.yml"]).join("/")
+File.open(db_config_output_path, "w") do |f|
+  result = ERB.new(File.read(db_config_template_path)).result(binding)
+  f.write(result)
+end
+
 copy_file '.rubocop.yml', '.rubocop.yml'
 copy_file '.erb-lint.yml', '.erb-lint.yml'
 copy_file '.editorconfig', '.editorconfig'
 copy_file 'config/sidekiq.yml', 'config/sidekiq.yml'
 copy_file 'config/simpacker.yml', 'config/simpacker.yml'
 copy_file 'config/settings.yml', 'config/settings.yml'
+copy_file 'config/tmp/database.yml', 'config/database.yml'
 
 run "cp .gitignore .dockerignore"

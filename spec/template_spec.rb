@@ -1,6 +1,7 @@
 RSpec.describe 'MyRailsTemplate' do
   describe 'Rails new' do
-    let!(:app_path) { "spec/tmp/test_app" }
+    let!(:app_name) { "test_app" }
+    let!(:app_path) { "spec/tmp/#{app_name}" }
     let!(:template_path) { "./rails/template.rb" }
 
     before { system "XDG_CONFIG_HOME=./ bundle exec rails new #{app_path} -m #{template_path}" }
@@ -41,6 +42,9 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.i18n.default_locale = :ja")).to eq true
       expect(application_file_text.include?("config.i18n.fallbacks = :en")).to eq true
       expect(application_file_text.include?("config.generators do |g|")).to eq true
+      expect(application_file_text.include?("config.active_record.database_selector")).to eq true
+      expect(application_file_text.include?("config.active_record.database_resolver")).to eq true
+      expect(application_file_text.include?("config.active_record.database_resolver_context")).to eq true
       expect(application_file_text.include?("config.active_job.queue_adapter = :sidekiq")).to eq true
       expect(application_file_text.include?("config.active_job.default_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_mailer.deliver_later_queue_name = :default")).to eq true
@@ -59,6 +63,15 @@ RSpec.describe 'MyRailsTemplate' do
       routes_file_text = File.read(file_path.call('config/routes.rb'))
       expect(routes_file_text.include?("require 'sidekiq/web'")).to eq true
       expect(routes_file_text.include?("mount Sidekiq::Web, at: '/sidekiq'")).to eq true
+
+      # checked database
+      database_file_text = File.read(file_path.call('config/database.yml'))
+      expect(database_file_text.include?("primary")).to eq true
+      expect(database_file_text.include?("primary_replica")).to eq true
+      expect(database_file_text.include?("url: <%= ENV['DATABASE_URL'] %>")).to eq true
+      expect(database_file_text.include?("database: #{app_name}_development")).to eq true
+      expect(database_file_text.include?("database: #{app_name}_test")).to eq true
+      expect(database_file_text.include?("database: #{app_name}_production")).to eq true
     end
   end
 end

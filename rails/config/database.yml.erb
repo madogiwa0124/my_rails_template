@@ -1,0 +1,41 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%%= ENV['DATABASE_URL'] %>
+
+development:
+  primary:
+    <<: *default
+    database: <%= app_name %>_development
+  primary_replica:
+    <<: *default
+    database: <%= app_name %>_development
+    replica: true
+
+test:
+  primary:
+    <<: *default
+    database: <%= app_name %>_test
+  primary_replica:
+    <<: *default
+    database: <%= app_name %>_test
+    replica: true
+
+production:
+  primary:
+    <<: *default
+    database: <%= app_name %>_production
+  primary_replica:
+    <<: *default
+    database: <%= app_name %>_production
+    replica: true
+
+staging:
+  primary:
+    <<: *default
+    database: <%= app_name %>_staging
+  primary_replica:
+    <<: *default
+    database: <%= app_name %>_staging
+    replica: true
