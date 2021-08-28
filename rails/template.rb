@@ -8,6 +8,7 @@ gem 'okcomputer'
 gem 'redis'
 gem 'sidekiq'
 gem 'simpacker'
+gem 'rails-i18n', '~> 6.0.0'
 
 gem_group :development, :test do
   gem 'bullet'
@@ -44,6 +45,10 @@ environment <<~TEXT
   config.time_zone = 'Tokyo'
   # config.active_record.default_timezone = :local
 
+  # For I18n
+  config.i18n.available_locales = [:ja, :en]
+  config.i18n.default_locale = :ja
+  config.i18n.fallbacks = :en
   # For custom settings
   config.settings = config_for(:settings)
 

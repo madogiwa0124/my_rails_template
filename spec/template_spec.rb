@@ -36,6 +36,9 @@ RSpec.describe 'MyRailsTemplate' do
       application_file_text = File.read(file_path.call('config/application.rb'))
       expect(application_file_text.include?("config.time_zone = 'Tokyo'")).to eq true
       expect(application_file_text.include?("config.settings = config_for(:settings)")).to eq true
+      expect(application_file_text.include?("config.i18n.available_locales = [:ja, :en]")).to eq true
+      expect(application_file_text.include?("config.i18n.default_locale = :ja")).to eq true
+      expect(application_file_text.include?("config.i18n.fallbacks = :en")).to eq true
       expect(application_file_text.include?("config.generators do |g|")).to eq true
       expect(application_file_text.include?("config.active_job.queue_adapter = :sidekiq")).to eq true
       expect(application_file_text.include?("config.active_job.default_queue_name = :default")).to eq true
