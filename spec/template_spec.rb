@@ -16,6 +16,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(File.exist?(file_path.call('config/settings.yml'))).to eq true
       expect(File.exist?(file_path.call('config/simpacker.yml'))).to eq true
       expect(File.exist?(file_path.call('.rubocop.yml'))).to eq true
+      expect(File.exist?(file_path.call('.erb-lint.yml'))).to eq true
       expect(File.exist?(file_path.call('.editorconfig'))).to eq true
       expect(File.exist?(file_path.call('.dockerignore'))).to eq true
 
@@ -25,6 +26,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(gem_file_text.include?("okcomputer")).to eq true
       expect(gem_file_text.include?("simpacker")).to eq true
       expect(gem_file_text.include?("rubocop")).to eq true
+      expect(gem_file_text.include?("erb_lint")).to eq true
       expect(gem_file_text.include?("rspec-rails")).to eq true
 
       # checked application.rb

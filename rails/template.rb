@@ -10,6 +10,7 @@ gem 'simpacker'
 
 gem_group :development, :test do
   gem 'brakeman', require: false
+  gem 'erb_lint', require: false
   gem 'rspec-rails', require: false
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
@@ -57,6 +58,7 @@ environment <<~TEXT
 TEXT
 
 copy_file '.rubocop.yml', '.rubocop.yml'
+copy_file '.erb-lint.yml', '.erb-lint.yml'
 copy_file '.editorconfig', '.editorconfig'
 copy_file 'config/simpacker.yml', 'config/simpacker.yml'
 copy_file 'config/settings.yml', 'config/settings.yml'
