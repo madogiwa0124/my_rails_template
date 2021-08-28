@@ -3,6 +3,7 @@
 --skip-action-text
 --skip-active-storage
 --skip-action-cable
+--skip-test
 --skip-test-unit
 --skip-jbuilder
 --skip-spring
