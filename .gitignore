@@ -2,4 +2,5 @@
 vendor
 rails/config/tmp
 spec/tmp
+spec/examples.txt
 .rspec
