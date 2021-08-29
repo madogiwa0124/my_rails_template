@@ -44,7 +44,6 @@ initializer 'lograge.rb', <<~CODE
         request_id: controller.request.request_id,
         remote_ip: controller.request.remote_ip,
         user_agent: controller.request.user_agent,
-        user_id: controller.current_user&.id
       }
     end
     config.lograge.custom_options = lambda do |event|
@@ -53,7 +52,6 @@ initializer 'lograge.rb', <<~CODE
         request_id: event.payload[:request_id],
         remote_ip: event.payload[:remote_ip],
         user_agent: event.payload[:user_agent],
-        user_id: event.payload[:user_id],
         time: Time.current.iso8601
       }
     end
