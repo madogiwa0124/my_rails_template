@@ -33,6 +33,8 @@ RSpec.describe 'MyRailsTemplate' do
       expect(gem_file_text.include?("rubocop")).to eq true
       expect(gem_file_text.include?("erb_lint")).to eq true
       expect(gem_file_text.include?("rspec-rails")).to eq true
+      expect(gem_file_text.include?("capybara")).to eq true
+      expect(gem_file_text.include?("simplecov")).to eq true
 
       # checked application.rb
       application_file_text = File.read(file_path.call('config/application.rb'))

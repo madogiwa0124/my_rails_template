@@ -24,6 +24,11 @@ gem_group :development, :test do
   gem 'rubocop-rspec', require: false
 end
 
+gem_group :test do
+  gem 'capybara'
+  gem 'simplecov', require: false
+end
+
 initializer 'okcomputer.rb', <<~CODE
   OkComputer::Registry.register 'ruby version', OkComputer::RubyVersionCheck.new
   # OkComputer::Registry.register 'version', OkComputer::AppVersionCheck.new(env: 'SOURCE_VERSION')

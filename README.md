@@ -128,6 +128,11 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
      gemfile    rubocop-rails
      gemfile    rubocop-rspec
         gsub    Gemfile
+     gemfile    group :test
+        gsub    Gemfile
+     gemfile    capybara
+     gemfile    simplecov
+        gsub    Gemfile
  initializer    okcomputer.rb
  initializer    lograge.rb
  initializer    sidekiq.rb
