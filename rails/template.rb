@@ -76,7 +76,7 @@ environment <<~'CODE'
   # For I18n
   config.i18n.available_locales = [:ja, :en]
   config.i18n.default_locale = :ja
-  config.i18n.fallbacks = :en
+  config.i18n.fallbacks = [:ja, :en]
 
   # For MultiDB
   config.active_record.database_selector = { delay: 2.seconds }

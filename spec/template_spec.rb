@@ -40,7 +40,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.settings = config_for(:settings)")).to eq true
       expect(application_file_text.include?("config.i18n.available_locales = [:ja, :en]")).to eq true
       expect(application_file_text.include?("config.i18n.default_locale = :ja")).to eq true
-      expect(application_file_text.include?("config.i18n.fallbacks = :en")).to eq true
+      expect(application_file_text.include?("config.i18n.fallbacks = [:ja, :en]")).to eq true
       expect(application_file_text.include?("config.generators do |g|")).to eq true
       expect(application_file_text.include?("config.active_record.database_selector")).to eq true
       expect(application_file_text.include?("config.active_record.database_resolver")).to eq true
