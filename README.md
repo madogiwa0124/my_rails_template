@@ -4,6 +4,8 @@ My application template for Ruby on Rails.
 
 # Usage
 
+## Genarate Application by Temaplate and railsrc
+
 ``` sh
 $ clone git@github.com:Madogiwa0124/my_rails_template.git
 $ cd my_rails_template
@@ -147,4 +149,30 @@ mount Sidekiq::Web, at: '/sidekiq'
       create    config/settings.yml
        force    config/database.yml
          run    cp .gitignore .dockerignore from "."
+```
+
+## After genarate
+
+```
+$ docker-compose up -d
+$ cd sampla_app
+$ bundle install
+$ bundle exec rubocop -A
+$ bundle exec rails g rspec:install
+$ env DATABASE_URL=postgres://postgres:password@localhost:5432 REDIS_URL=redis://localhost:6379/0 bin/rails db:prepare
+```
+
+* Fix `application.rb` and enviroments files.
+* Fix `spec/spec_helper` and `spec/rails_helper`.
+  - Configured `capybara`, `simplecov`
+
+
+## Check
+
+``` sh
+$ bundle exec rubocop
+$ bundle exec erblint
+$ bundle exec rspec
+$ env DATABASE_URL=postgres://postgres:password@localhost:5432 REDIS_URL=redis://localhost:6379/0 bin/rails s
+$ env DATABASE_URL=postgres://postgres:password@localhost:5432 REDIS_URL=redis://localhost:6379/0 bundle exec sidekiq
 ```
