@@ -1,10 +1,12 @@
 ---
 exclude:
-  - 'vendor'
+  - '**/vendor/**/*'
 EnableDefaultLinters: true
 linters:
   ErbSafety:
     enabled: true
+  SelfClosingTag:
+    enabled: false
   Rubocop:
     enabled: true
     rubocop_config:
