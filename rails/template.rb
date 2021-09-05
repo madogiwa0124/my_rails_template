@@ -168,5 +168,6 @@ copy_file 'config/sidekiq.yml', 'config/sidekiq.yml'
 copy_file 'config/simpacker.yml', 'config/simpacker.yml'
 copy_file 'config/settings.yml', 'config/settings.yml'
 copy_file 'config/tmp/database.yml', 'config/database.yml'
+copy_file 'app/models/application_record.rb', 'app/models/application_record.rb'
 
 run "cp .gitignore .dockerignore"

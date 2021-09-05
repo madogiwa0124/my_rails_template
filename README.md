@@ -148,6 +148,7 @@ mount Sidekiq::Web, at: '/sidekiq'
       create    config/simpacker.yml
       create    config/settings.yml
        force    config/database.yml
+       force    app/models/application_record.rb
          run    cp .gitignore .dockerignore from "."
 ```
 
