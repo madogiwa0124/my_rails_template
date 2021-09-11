@@ -24,6 +24,10 @@ gem_group :development, :test do
   gem 'rubocop-rspec', require: false
 end
 
+gem_group :development do
+  gem 'letter_opener_web', '~> 1.0'
+end
+
 gem_group :test do
   gem 'capybara'
   gem 'simplecov', require: false
@@ -129,6 +133,9 @@ development_setting = <<~CODE
   # and this method does not generate any change events.
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
+  # For local Mailer
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # For Bullet
   config.after_initialize do
     Bullet.enable = true
@@ -137,6 +144,9 @@ development_setting = <<~CODE
 CODE
 
 test_setting = <<~CODE
+  # For local Mailer
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # For Bullet
   config.after_initialize do
     Bullet.enable = true
@@ -149,6 +159,9 @@ environment development_setting, env: 'development'
 environment test_setting, env: 'test'
 
 route <<~CODE
+  For LetterOpenerWeb
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
   # For Sidekiq Web UI
   require 'sidekiq/web'
   mount Sidekiq::Web, at: '/sidekiq'

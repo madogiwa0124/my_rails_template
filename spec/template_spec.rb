@@ -35,6 +35,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(gem_file_text.include?("rspec-rails")).to eq true
       expect(gem_file_text.include?("capybara")).to eq true
       expect(gem_file_text.include?("simplecov")).to eq true
+      expect(gem_file_text.include?("letter_opener_web")).to eq true
 
       # checked application.rb
       application_file_text = File.read(file_path.call('config/application.rb'))
@@ -56,15 +57,18 @@ RSpec.describe 'MyRailsTemplate' do
       development_file_text = File.read(file_path.call('config/environments/development.rb'))
       expect(development_file_text.include?("Bullet.enable")).to eq true
       expect(development_file_text.include?("config.file_watcher = ActiveSupport::FileUpdateChecker")).to eq true
+      expect(development_file_text.include?("config.action_mailer.default_url_options")).to eq true
 
       # checked test
       test_file_text = File.read(file_path.call('config/environments/test.rb'))
       expect(test_file_text.include?("Bullet.enable")).to eq true
+      expect(development_file_text.include?("config.action_mailer.default_url_options")).to eq true
 
       # checked routes
       routes_file_text = File.read(file_path.call('config/routes.rb'))
       expect(routes_file_text.include?("require 'sidekiq/web'")).to eq true
       expect(routes_file_text.include?("mount Sidekiq::Web, at: '/sidekiq'")).to eq true
+      expect(routes_file_text.include?("mount LetterOpenerWeb::Engine, at: '/letter_opener'")).to eq true
 
       # checked database
       database_file_text = File.read(file_path.call('config/database.yml'))
