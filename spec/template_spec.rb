@@ -53,11 +53,18 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.action_mailer.deliver_later_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_view.field_error_proc = proc")).to eq true
 
+      #checked production
+      production_file_text = File.read(file_path.call('config/environments/production.rb'))
+      expect(production_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
+      expect(production_file_text.include?("config.session_store(:cache_store, secure: true")).to eq true
+
       # checked development
       development_file_text = File.read(file_path.call('config/environments/development.rb'))
       expect(development_file_text.include?("Bullet.enable")).to eq true
       expect(development_file_text.include?("config.file_watcher = ActiveSupport::FileUpdateChecker")).to eq true
       expect(development_file_text.include?("config.action_mailer.default_url_options")).to eq true
+      expect(development_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
+      expect(development_file_text.include?("config.session_store :cache_store")).to eq true
 
       # checked test
       test_file_text = File.read(file_path.call('config/environments/test.rb'))

@@ -127,7 +127,24 @@ environment <<~'CODE'
   config.action_mailer.deliver_later_queue_name = :default
 CODE
 
-development_setting = <<~CODE
+development_setting = <<~'CODE'
+  # Enable/disable caching. By default caching is disabled.
+  # Run rails dev:cache to toggle caching.
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+    config.public_file_server.headers = {
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+    }
+    config.session_store :cache_store
+  else
+    config.action_controller.perform_caching = false
+
+    config.cache_store = :null_store
+  end
+
   # For docker environment
   # In the Dcoker environment, the host directory is mounted on the virtual environment as a shared file using volume,
   # and this method does not generate any change events.
@@ -155,8 +172,15 @@ test_setting = <<~CODE
   end
 CODE
 
+production_setting = <<~CODE
+  # For cache and session used by default same redis.
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+  config.session_store(:cache_store, secure: true, after: 30.days)
+CODE
+
 environment development_setting, env: 'development'
 environment test_setting, env: 'test'
+environment production_setting, env: 'production'
 
 route <<~CODE
   For LetterOpenerWeb
