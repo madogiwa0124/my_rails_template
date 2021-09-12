@@ -130,6 +130,10 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
      gemfile    rubocop-rails
      gemfile    rubocop-rspec
         gsub    Gemfile
+     gemfile    group :development
+        gsub    Gemfile
+     gemfile    letter_opener_web (~> 1.0)
+        gsub    Gemfile
      gemfile    group :test
         gsub    Gemfile
      gemfile    capybara
@@ -138,7 +142,10 @@ Initialized empty Git repository in my_rails_template/sample_app/.git/
  initializer    okcomputer.rb
  initializer    lograge.rb
  initializer    sidekiq.rb
-       route    # For Sidekiq Web UI
+       route    For LetterOpenerWeb
+mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
+# For Sidekiq Web UI
 require 'sidekiq/web'
 mount Sidekiq::Web, at: '/sidekiq'
       create    .rubocop.yml
@@ -150,6 +157,7 @@ mount Sidekiq::Web, at: '/sidekiq'
        force    config/database.yml
        force    app/models/application_record.rb
          run    cp .gitignore .dockerignore from "."
+    executed by using template and railsrc.
 ```
 
 ## After genarate
