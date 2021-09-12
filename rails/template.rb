@@ -122,6 +122,7 @@ environment <<~'CODE'
   end
 
   # For ActiveJob and ActionMailer
+  config.active_job.log_arguments = false
   config.active_job.queue_adapter = :sidekiq
   config.active_job.default_queue_name = :default
   config.action_mailer.deliver_later_queue_name = :default

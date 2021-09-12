@@ -48,11 +48,11 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.active_record.database_selector")).to eq true
       expect(application_file_text.include?("config.active_record.database_resolver")).to eq true
       expect(application_file_text.include?("config.active_record.database_resolver_context")).to eq true
+      expect(application_file_text.include?("config.active_job.log_arguments = false")).to eq true
       expect(application_file_text.include?("config.active_job.queue_adapter = :sidekiq")).to eq true
       expect(application_file_text.include?("config.active_job.default_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_mailer.deliver_later_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_view.field_error_proc = proc")).to eq true
-
       #checked production
       production_file_text = File.read(file_path.call('config/environments/production.rb'))
       expect(production_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
