@@ -37,7 +37,6 @@ initializer 'okcomputer.rb', <<~CODE
   OkComputer::Registry.register 'ruby version', OkComputer::RubyVersionCheck.new
   # OkComputer::Registry.register 'version', OkComputer::AppVersionCheck.new(env: 'SOURCE_VERSION')
   # OkComputer::Registry.register 'redis', OkComputer::RedisCheck.new({})
-  # OkComputer::Registry.register 'ruby version', OkComputer::RubyVersionCheck.new
   # OkComputer::Registry.register 'cache', OkComputer::GenericCacheCheck.new
   # OkComputer::Registry.register 'sidekiq latency', OkComputer::SidekiqLatencyCheck.new('default')
 CODE
