@@ -10,7 +10,7 @@ gem 'lograge'
 gem 'redis'
 gem 'sidekiq'
 gem 'simpacker'
-gem 'rails-i18n', '~> 6.0.0'
+gem 'rails-i18n'
 
 gem_group :development, :test do
   gem 'bullet'
@@ -146,11 +146,6 @@ development_setting = <<~'CODE'
     config.cache_store = :null_store
   end
 
-  # For docker environment
-  # In the Dcoker environment, the host directory is mounted on the virtual environment as a shared file using volume,
-  # and this method does not generate any change events.
-  config.file_watcher = ActiveSupport::FileUpdateChecker
-
   # For local Mailer
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
@@ -185,7 +180,7 @@ environment test_setting, env: 'test'
 environment production_setting, env: 'production'
 
 route <<~CODE
-  For LetterOpenerWeb
+  # For LetterOpenerWeb
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
   # For Sidekiq Web UI

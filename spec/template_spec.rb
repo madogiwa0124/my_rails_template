@@ -61,7 +61,6 @@ RSpec.describe 'MyRailsTemplate' do
       # checked development
       development_file_text = File.read(file_path.call('config/environments/development.rb'))
       expect(development_file_text.include?("Bullet.enable")).to eq true
-      expect(development_file_text.include?("config.file_watcher = ActiveSupport::FileUpdateChecker")).to eq true
       expect(development_file_text.include?("config.action_mailer.delivery_method")).to eq true
       expect(development_file_text.include?("config.action_mailer.default_url_options")).to eq true
       expect(development_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
