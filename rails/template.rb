@@ -172,7 +172,7 @@ CODE
 production_setting = <<~CODE
   # For cache and session used by default same redis.
   config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
-  config.session_store(:cache_store, secure: true, after: 30.days)
+  config.session_store(:cache_store, secure: true, expire_after: 30.days)
 CODE
 
 environment development_setting, env: 'development'
