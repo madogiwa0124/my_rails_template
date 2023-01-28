@@ -7,20 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['3.0']
+        ruby: ["3.2"]
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-    - name: install bundler
-      run: gem install bundler -v 2.2.3
-    - name: install ruby deps
-      run: bundle install --jobs 4 --retry 3
-    - name: test
-      run: bundle exec rspec
-    - name: install ruby edge deps
-      run: BUNDLE_GEMFILE=gemfiles/rails_edge.gemfile bundle install --jobs 4 --retry 3
-    - name: test
-      run: bundle exec rspec
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: install ruby deps
+        run: bundle install --jobs 4 --retry 3
+      - name: test
+        run: bundle exec rspec
+      - name: install ruby edge deps
+        run: BUNDLE_GEMFILE=gemfiles/rails_edge.gemfile bundle install --jobs 4 --retry 3
+      - name: test
+        run: bundle exec rspec
