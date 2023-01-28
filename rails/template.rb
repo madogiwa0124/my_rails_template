@@ -154,6 +154,9 @@ development_setting = <<~'CODE'
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # For show rendered filename.
+  config.action_view.annotate_rendered_view_with_filenames = true
+
   # For Bullet
   config.after_initialize do
     Bullet.enable = true

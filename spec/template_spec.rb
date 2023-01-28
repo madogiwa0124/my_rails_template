@@ -69,6 +69,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(development_file_text.include?("config.action_mailer.default_url_options")).to eq true
       expect(development_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
       expect(development_file_text.include?("config.session_store :cache_store")).to eq true
+      expect(development_file_text.include?("config.action_view.annotate_rendered_view_with_filenames = true")).to eq true
 
       # checked test
       test_file_text = File.read(file_path.call('config/environments/test.rb'))
