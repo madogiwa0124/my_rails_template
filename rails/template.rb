@@ -12,6 +12,10 @@ gem 'sidekiq'
 gem 'simpacker'
 gem 'rails-i18n'
 
+gem_group :production do
+  gem 'sendgrid-actionmailer'
+end
+
 gem_group :development, :test do
   gem 'bullet'
   gem 'brakeman', require: false
@@ -173,6 +177,11 @@ production_setting = <<~CODE
   # For cache and session used by default same redis.
   config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
   config.session_store(:cache_store, secure: true, expire_after: 30.days)
+
+  # For Mailer setting for sendgrid
+  config.action_mailer.delivery_method = :sendgrid_actionmailer
+  config.action_mailer.sendgrid_actionmailer_settings = { api_key: ENV['SENDGRID_API_KEY'] }
+  config.action_mailer.default_url_options = { host: 'yourhost.example.com', protocol: :https }
 CODE
 
 environment development_setting, env: 'development'

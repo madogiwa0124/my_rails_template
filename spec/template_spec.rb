@@ -36,6 +36,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(gem_file_text.include?("capybara")).to eq true
       expect(gem_file_text.include?("simplecov")).to eq true
       expect(gem_file_text.include?("letter_opener_web")).to eq true
+      expect(gem_file_text.include?("sendgrid-actionmailer")).to eq true
 
       # checked application.rb
       application_file_text = File.read(file_path.call('config/application.rb'))
@@ -53,10 +54,13 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.active_job.default_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_mailer.deliver_later_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_view.field_error_proc = proc")).to eq true
+
       #checked production
       production_file_text = File.read(file_path.call('config/environments/production.rb'))
       expect(production_file_text.include?("config.cache_store = :redis_cache_store")).to eq true
       expect(production_file_text.include?("config.session_store(:cache_store, secure: true")).to eq true
+      expect(production_file_text.include?("config.action_mailer.sendgrid_actionmailer_settings = { api_key: ENV['SENDGRID_API_KEY'] }")).to eq true
+      expect(production_file_text.include?("config.action_mailer.default_url_options = { host: 'yourhost.example.com', protocol: :https }")).to eq true
 
       # checked development
       development_file_text = File.read(file_path.call('config/environments/development.rb'))
