@@ -96,6 +96,9 @@ environment <<~'CODE'
   config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
+  # For ActiveRecord query log tag
+  config.active_record.query_log_tags_enabled = true
+
   # For custom settings
   config.settings = config_for(:settings)
 

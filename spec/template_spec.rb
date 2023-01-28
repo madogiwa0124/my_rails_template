@@ -54,6 +54,7 @@ RSpec.describe 'MyRailsTemplate' do
       expect(application_file_text.include?("config.active_job.default_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_mailer.deliver_later_queue_name = :default")).to eq true
       expect(application_file_text.include?("config.action_view.field_error_proc = proc")).to eq true
+      expect(application_file_text.include?("config.active_record.query_log_tags_enabled = true")).to eq true
 
       #checked production
       production_file_text = File.read(file_path.call('config/environments/production.rb'))
